@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>VoiceInvoice — Speak it. Invoice it.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366f1'/%3E%3Cpath d='M10 12h12M10 16h8M10 20h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo" href="/">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="28" height="28">
+            <rect width="32" height="32" rx="8" fill="currentColor"/>
+            <path d="M10 12h12M10 16h8M10 20h10" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </span>
+        <span class="logo-text">
+          <strong>VoiceInvoice</strong>
+          <small>on-device</small>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <span class="status" id="status">
+          <span class="status-dot" data-state="idle" aria-hidden="true"></span>
+          <span class="status-label" id="status-text">Idle</span>
+        </span>
+        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="layout">
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Speak it.<br/><span class="grad">Invoice it.</span></h1>
+      <p class="hero-sub">
+        Turn a spoken purchase into a professional PDF invoice — entirely on your device.
+        No cloud. No API keys. No data leaving your machine.
+      </p>
+      <div class="hero-features">
+        <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> On-device AI</span>
+        <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Private by design</span>
+        <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Works offline</span>
+      </div>
+    </section>
+
+    <!-- UPLOAD + LOG -->
+    <section class="grid-2">
+      <!-- 01 — Upload -->
+      <article class="panel" id="panel-upload">
+        <header class="panel-head">
+          <span class="panel-step">01</span>
+          <h2>Add a voice memo</h2>
+        </header>
+
+        <div
+          id="dropzone"
+          class="dropzone"
+          tabindex="0"
+          role="button"
+          aria-label="Upload audio file. Click, drop, or press Enter to browse."
+        >
+          <div class="dropzone-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 18V6m0 0l-4 4m4-4l4 4"/>
+              <path d="M4 20h16"/>
+            </svg>
+          </div>
+          <p class="dropzone-title">Drop your audio file here</p>
+          <p class="dropzone-sub">or <span class="link">browse files</span></p>
+          <p class="dropzone-formats">MP3 · WAV · M4A · OGG · WEBM — up to 50 MB</p>
+          <input type="file" id="file-input" accept="audio/*,.mp3,.wav,.m4a,.ogg,.webm" hidden />
+        </div>
+
+        <div class="file-row" id="file-row" hidden>
+          <div class="file-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+            </svg>
+          </div>
+          <div class="file-info">
+            <span class="file-name" id="file-name">—</span>
+            <span class="file-meta" id="file-meta">—</span>
+          </div>
+          <button class="icon-btn" id="remove-file" aria-label="Remove selected file" title="Remove">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <audio id="audio-preview" controls hidden preload="metadata"></audio>
+
+        <button class="btn btn-primary" id="transcribe-btn" disabled>
+          <span class="btn-label">Transcribe &amp; extract</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </article>
+
+      <!-- 02 — Status -->
+      <article class="panel" id="panel-log">
+        <header class="panel-head">
+          <span class="panel-step">02</span>
+          <h2>Activity</h2>
+          <button class="btn-ghost" id="clear-log" title="Clear log">Clear</button>
+        </header>
+        <ol class="log" id="log" aria-live="polite">
+          <li class="log-line dim"><time>—</time><span>Ready. Drop an audio file to begin.</span></li>
+        </ol>
+      </article>
+    </section>
+
+    <!-- 03 — Review -->
+    <article class="panel" id="panel-review" hidden>
+      <header class="panel-head">
+        <span class="panel-step">03</span>
+        <h2>Review invoice</h2>
+        <span class="panel-chip" id="invoice-chip" hidden></span>
+      </header>
+
+      <div class="field-row">
+        <label for="party-input">Bill to</label>
+        <input type="text" id="party-input" placeholder="Customer name" autocomplete="off" />
+      </div>
+
+      <div class="table-wrap">
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th class="col-idx">#</th>
+              <th>Product</th>
+              <th class="col-qty">Qty</th>
+              <th class="col-unit">Unit</th>
+              <th class="col-price">Unit Price</th>
+              <th class="col-total">Total</th>
+              <th class="col-act" aria-label="Actions"></th>
+            </tr>
+          </thead>
+          <tbody id="items-body"></tbody>
+        </table>
+      </div>
+
+      <button class="btn btn-secondary" id="add-item-btn">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add item
+      </button>
+
+      <div class="totals">
+        <div class="totals-row"><span>Subtotal</span><span id="subtotal-val">Rs. 0.00</span></div>
+        <div class="totals-row"><span>Tax</span><span id="tax-val">Rs. 0.00</span></div>
+        <div class="totals-row total"><span>Total</span><span id="total-val">Rs. 0.00</span></div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="download-btn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+        </svg>
+        Download PDF
+      </button>
+    </article>
+
+    <!-- 04 — Ledger -->
+    <article class="panel" id="panel-ledger">
+      <header class="panel-head">
+        <span class="panel-step">04</span>
+        <h2>Invoice log</h2>
+        <button class="btn-ghost" id="clear-ledger" title="Reset ledger">Clear all</button>
+      </header>
+      <div class="table-wrap">
+        <table class="ledger-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Invoice #</th>
+              <th>Party</th>
+              <th class="col-total">Total</th>
+            </tr>
+          </thead>
+          <tbody id="ledger-body">
+            <tr><td colspan="4" class="empty">No invoices yet. Upload a voice memo to get started.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <span>VoiceInvoice · v1.0</span>
+    <span class="dot">·</span>
+    <span>Fully on-device · Zero telemetry</span>
+  </footer>
+
+  <!-- Toasts -->
+  <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

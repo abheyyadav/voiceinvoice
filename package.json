@@ -1,0 +1,17 @@
+{
+  "name": "voice-invoice",
+  "version": "1.0.0",
+  "description": "Turn a spoken purchase description into a PDF invoice — fully on-device.",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "test:pdf": "node scripts/test-pdf.js",
+    "test:extract": "node scripts/test-extract.js",
+    "test:speech": "node scripts/test-speech.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@qvac/sdk": "^0.19.1"
+  }
+}
