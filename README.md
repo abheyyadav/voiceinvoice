@@ -15,7 +15,7 @@ A formatted PDF invoice with line items, totals, and a clean layout. Ready to em
 
 ---
 
-## Why
+## Why This Web App
 
 Small business owners, freelancers, and shopkeepers need invoices on the spot. Existing options are either subscription-based cloud software (QuickBooks, Zoho), manual templates (slow and error-prone), or AI generators that ship your customer's name and prices to a server.
 
